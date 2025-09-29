@@ -3,8 +3,6 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import String, Text, ForeignKey
 from sqlalchemy_utils import ChoiceType
 
-from models import Order
-
 
 class User(Base):
     __tablename__='users'
@@ -14,9 +12,9 @@ class User(Base):
     password: Mapped[str] = mapped_column(Text,nullable=True)
     is_staff: Mapped[bool] = mapped_column(default=False)
     is_active: Mapped[bool] = mapped_column(default=False)
-    order: Mapped['Order'] = relationship(
+    orders: Mapped['Order'] = relationship(
         'Order',
-        back_populates='users'
+        back_populates='user'
     )
 
     def __repr__(self):
@@ -42,4 +40,11 @@ class Order(Base):
     quantity: Mapped[int] = mapped_column(nullable=False)
     order_status: Mapped[ChoiceType] = mapped_column(choices=ORDER_STATUSES)
     pizza_sizes: Mapped[ChoiceType] = mapped_column(choices=PIZZA_SIZES,default='SMALL')
-    user: Mapped[User] = mapped_column(ForeignKey('user.id'))
+    user_id: Mapped[User] = mapped_column(ForeignKey('user.id'))
+    user: Mapped["User"] = relationship(
+        'User',
+        back_populates='orders'
+    )
+
+    def __repr__(self):
+        return f'<Order: {self.user_id}>'
