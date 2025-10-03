@@ -4,8 +4,22 @@ from sqlalchemy import String, Text
 from typing import Optional
 
 class SighUpModel(BaseModel):
-    id: Mapped
-    username: Mapped[str] = mapped_column(String(25), unique=True)
-    email: Mapped[str] = mapped_column(String(85), unique=True)
-    password: Mapped[str] = mapped_column(Text, nullable=True)
-    is_staff: Mapped[bool] = mapped_column(default=False)
+    id: Optional[int]
+    username: str
+    email: str
+    password: str
+    is_staff: Optional[bool]
+    is_active: Optional[bool]
+
+
+    class Config:
+        orm_mode = True
+        scheme_extra = {
+            'example' : {
+                'username': 'thenaziazi',
+                'email': 'bolotbekova09@gmail.com',
+                'password': 'password',
+                'is_staff': False,
+                'is_active': True,
+            }
+        }
