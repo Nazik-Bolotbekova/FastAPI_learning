@@ -1,6 +1,4 @@
 from pydantic import BaseModel
-from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import String, Text
 from typing import Optional
 
 class SighUpModel(BaseModel):
