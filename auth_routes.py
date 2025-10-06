@@ -5,6 +5,8 @@ from db import Session, engine
 from schemas import SighUpModel
 from models import User
 
+from werkzeug.security import generate_password_hash, check_password_hash
+
 
 router = APIRouter(prefix='/auth', tags=['auth'])
 
@@ -14,7 +16,8 @@ async def register():
 
 session = Session(bind=engine)
 
-@router.post('/signup')
+@router.post('/signup',
+             status_code=status.HTTP_201_CREATED)
 async def signup(user: SighUpModel):
     db_email = session.query(User).filter(User.email == user.email).first()
 
@@ -34,5 +37,14 @@ async def signup(user: SighUpModel):
     new_user = User(
         username=user.username,
         email=user.email,
-        password=user.password
+        password=generate_password_hash(user.password),
+        is_staff=user.is_staff,
+        is_active=user.is_active,
     )
+
+    session.add(new_user)
+
+    session.commit()
+
+    return new_user
+
