@@ -19,4 +19,15 @@ async def signup(user: SighUpModel):
     db_email = session.query(User).filter(User.email == user.email).first()
 
     if db_email is not None:
-        raise HTTPException(status_code=status.HTTP_400_BAD_RQUEST,)
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_RQUEST,
+            detail='User with that email already exists'
+            )
+
+    db_username = session.query(User).filter(User.username == user.username).first()
+
+    if db_username is not None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail='User with that username already exists'
+        )
