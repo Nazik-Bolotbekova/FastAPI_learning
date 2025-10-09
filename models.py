@@ -3,7 +3,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import String, Text, ForeignKey, Enum
 from sqlalchemy_utils import ChoiceType
 
-from enum import OrderStatus, PizzaSize
+from enums import OrderStatus, PizzaSize
 
 
 class User(Base):
