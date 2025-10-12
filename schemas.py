@@ -21,3 +21,12 @@ class SighUpModel(BaseModel):
                 'is_active': True,
             }
         }
+
+
+class Settings(BaseModel):
+    jwt_secret_key: str='f8021a2400469bd30d1d907a0aebb8a740986ea75e289a6cb0dd2c728a8b863a'
+
+
+class Login(BaseModel):
+    username: str
+    password: str
