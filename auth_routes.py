@@ -5,6 +5,8 @@ from db import Session, engine
 from schemas import SighUpModel
 from models import User
 
+import logging
+
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
@@ -48,3 +50,9 @@ async def signup(user: SighUpModel):
 
     return new_user
 
+
+logging.debug("A DEBUG Message")
+logging.info("An INFO")
+logging.warning("A WARNING")
+logging.error("An ERROR")
+logging.critical("A message of CRITICAL severity")
